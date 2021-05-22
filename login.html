@@ -1,0 +1,163 @@
+<?php
+   $login=false;
+  
+   $server="localhost";
+   $username="root";
+   $password="";
+   $database="devjam";  
+   $con=mysqli_connect($server,$username,$password,$database);  
+
+   if(!$con){
+       die("connection is failed to the database due to" . mysqli_connect_error());
+   }
+   echo "successful connection to the database";
+     
+     $email=$_POST['email'];
+     $password=$_POST['password'];  
+     $sql="select * from login where email='$email' && password='$password'  ";
+     
+     $result=mysqli_query($con,$sql);
+     $num= mysqli_num_rows($result);  
+    if($num==0){
+       $login=true;
+    }
+    else{
+        $showError= "Invalid credentials";
+    }
+
+   header('location:index.php');
+
+  
+  ?>   
+
+<html>
+ <head>
+    <style>
+        body {
+          background-image: url("images/demo/backgrounds/01.png");
+          background-repeat: no-repeat;
+          background-attachment: fixed;  
+          background-size: 100% 100%;
+        }
+        .one {
+          background-color: hsla(202, 74%, 40%, 0.349);
+          width:50%;
+          font-size:30px;
+          
+          border-style: solid;
+          border-radius: 15px;
+          border-width: 7px;
+          padding-top: 60px;
+          padding-right: 60px;
+          padding-bottom: 60px;
+          padding-left: 60px;
+         
+          
+        }
+        .button {
+          background-color: #57af4cdc;
+          border: none;
+          color: white;
+          padding: 10px 25px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border: 4px solid rgba(6, 141, 74, 0.712);
+        }
+        .textboxid {
+         height: 7%;
+         width: 100%;
+         border: 4px solid rgba(70, 92, 190, 0.705);
+
+        }
+        .popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+        
+      </style>
+         
+ </head>   
+<body>
+  <center>
+  <br><br><br><br><br>
+
+  
+ 
+    <div style="width:35%; height:500px;text-align:center">
+  <form class="one" action="login.php" method="post">
+  
+    <label for="text"><b>College id</b></label><br>
+    <input  class="textboxid" type="email" id="email" name="email" value="" placeholder="your college id"><br><br>
+    
+    <label for="password"><b>Password:</b></label><br>
+    <input class="textboxid" type="password" id="password" name="password" placeholder="Enter password here" required><br><br>
+    <div class="popup" onclick="myFunction()"><a href="#" class="button">Login</a>
+      <span class="popuptext" id="myPopup">College id and password doesn't match</span>
+      <script>
+        // When the user clicks on <div>, open the popup
+        function myFunction() {
+          var popup = document.getElementById("myPopup");
+          popup.classList.toggle("show");
+        }
+        </script>
+    </div>
+    
+ 
+  </form>
+
+
+</center>
+</body>
+</html>
